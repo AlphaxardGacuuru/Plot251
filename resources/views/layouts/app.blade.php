@@ -15,7 +15,7 @@
     <title>{{ config('app.name', 'Plot251') }}</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/p-512x512.png">
+    <link rel="icon" href="storage/img/favicon-32x32.png">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
