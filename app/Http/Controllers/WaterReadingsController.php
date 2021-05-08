@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 class WaterReadingsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -49,7 +59,7 @@ class WaterReadingsController extends Controller
             $waterReading = new WaterReadings;
             $waterReading->apartment = $F;
             $waterReading->reading = $newReading;
-            //$waterReading->save();
+            $waterReading->save();
 
             /* Get water reading for individual */
             $lastMonth = Carbon::now()->subMonth()->format("Y-m");
