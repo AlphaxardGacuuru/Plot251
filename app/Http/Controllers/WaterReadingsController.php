@@ -102,7 +102,9 @@ class WaterReadingsController extends Controller
         $lastReadingTot2 = WaterReadings::where('created_at', 'like', '%' . $lastMonth2 . '%')->sum('reading');
         $lastReadingTot3 = WaterReadings::where('created_at', 'like', '%' . $lastMonth3 . '%')->sum('reading');
         $totalUnits = $lastReadingTot - $lastReadingTot2;
-        $proportion = $lastReadingTot2 - $lastReadingTot3;
+        $proportion = $totalUnits - ($lastReadingTot2 - $lastReadingTot3);
+        $proportion = ($proportion * 100) / ($lastReadingTot2 - $lastReadingTot3);
+        $proportion = round($proportion);
         /* Get total units used */
         $totalPayments = WaterPayments::where('created_at', 'like', '%' . $lastMonth . '%')->sum('amount');
 

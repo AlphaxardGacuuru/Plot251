@@ -73,7 +73,9 @@ class UsersController extends Controller
         $lastReadingTot3 = WaterReadings::where('created_at', 'like', '%' . $lastMonth3 . '%')
             ->where('apartment', auth()->user()->apartment)->sum('reading');
         $totalUnits = $lastReadingTot - $lastReadingTot2;
-        $proportion = $lastReadingTot2 - $lastReadingTot3;
+        $proportion = $totalUnits - ($lastReadingTot2 - $lastReadingTot3);
+        $proportion = ($proportion * 100) / ($lastReadingTot2 - $lastReadingTot3);
+        $proportion = round($proportion);
 
         /* Format proportion to show relative usage nicely */
         if ($proportion < 0) {

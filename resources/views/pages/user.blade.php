@@ -75,7 +75,7 @@
                     @if($lastReadingTot3 > 0)
                         {{-- Progress Bar --}}
                         <div class="progress rounded-0">
-                            <div class="progress-bar bg-{{ $class }}" style="width:10%">{{ $proportion }}</div>
+                            <div class="progress-bar bg-{{ $class }}" style="width:10%">{{ $proportion }} %</div>
                         </div>
                         <br>
                         <h5 class="text-{{ $class }}">{{ $moreOrLess }}</h5>
