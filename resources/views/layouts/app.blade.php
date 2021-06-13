@@ -22,91 +22,93 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-
-    </style>
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
     {{-- IOS support --}}
-    <link rel="apple-touch-icon" href="img/musical-note.png">
+    <link rel="apple-touch-icon" href="storage/img/favicon-32x32.png">
     <meta name="apple-mobile-web-app-status-bar" content="#aa7700">
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
-            <div class="container">
-                @auth
-                    @if(Auth::user()->name == "Admin")
-                        <a style="color: #209CEE;" class="navbar-brand" href="{{ url('/') }}">
-                            {{ config('app.name', 'Plot251') }}
-                        </a>
-                    @endif
-                @endauth
-                {{-- <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon"></span>
-                </button> --}}
 
-                {{-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> --}}
-                <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link"
-                                href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if(Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                    href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right rounded-0 p-0"
-                                aria-labelledby="navbarDropdown">
+        <!-- ***** Header Area Start ***** -->
+        <header style="background-color: #232323" class="header-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="menu-area d-flex justify-content-between">
+                            <!-- Logo Area  -->
+                            <div class="logo-area">
                                 @auth
                                     @if(Auth::user()->name == "Admin")
-                                        <a class="dropdown-item" href="/water-readings/create">Add readings</a>
-                                        <a class="dropdown-item" href="/water-payments/create">Add payments</a>
-                                        <a class="dropdown-item" href="/apartment/0">My Account</a>
+                                        <a href="/">Plot 251</a>
                                     @endif
+                                @else
+                                    <a href="#">Plot 251</a>
                                 @endauth
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
-                                    @csrf
-                                </form>
                             </div>
-                        </li>
-                    @endguest
-                </ul>
-                {{-- </div> --}}
+
+                            <div class="menu-content-area d-flex align-items-center">
+                                <!-- Header Social Area -->
+                                <div class="header-social-area d-flex align-items-center">
+                                    <!-- Authentication Links -->
+                                    @guest
+                                        <li class="nav-item">
+                                            <a class="display-4"
+                                                href="{{ route('login') }}">{{ __('Login') }}</a>
+                                        </li>
+                                        {{-- @if(Route::has('register'))
+                                            <li class="nav-item">
+                                                <a class="display-4"
+                                                    href="{{ route('register') }}">{{ __('Register') }}</a>
+                                            </li>
+                                        @endif --}}
+                                    @else
+                                        <div class="dropdown">
+                                            <a href="#" class="nav-link dropdown-toggle" role="button"
+                                                id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                {{ Auth::user()->name }}
+                                            </a>
+                                            <div style="border-radius: 0;"
+                                                class="dropdown-menu dropdown-menu-right m-0 p-0"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <a href='/water-readings/create'
+                                                    class="p-3 dropdown-item border-bottom">
+                                                    <h6>Add readings</h6>
+                                                </a>
+                                                <a href="/water-payments/create"
+                                                    class="p-3 dropdown-item border-bottom">
+                                                    <h6>Add payments</h6>
+                                                </a>
+                                                <a href="/apartment/0" class="p-3 dropdown-item border-bottom">
+                                                    <h6>My Account</h6>
+                                                </a>
+                                                <a href="{{ route('logout') }}"
+                                                    class="p-3 dropdown-item" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                                    <h6>{{ __('Sign out') }}</h6>
+                                                </a>
+                                                <form id="logout-form" action="{{ route('logout') }}"
+                                                    method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endguest
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>
+        </header>
+        <!-- ***** Header Area End ***** -->
         <br>
 
         <div class="row">

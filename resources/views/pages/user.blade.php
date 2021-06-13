@@ -1,10 +1,12 @@
 @extends('layouts/app')
 
 @section('content')
+
 @php
     use App\WaterReadings;
     use App\WaterPayments;
 @endphp
+
 <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
