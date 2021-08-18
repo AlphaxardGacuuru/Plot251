@@ -21,4 +21,5 @@ Route::resources([
     'apartment' => 'UsersController',
     'water-readings' => 'WaterReadingsController',
     'water-payments' => 'WaterPaymentsController',
+    'sms' => 'SMSController',
 ]);

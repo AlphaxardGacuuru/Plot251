@@ -1,4 +1,5 @@
 @extends('layouts/app')
+
 @section('content')
 <div class="row">
     <div class="col-sm-4"></div>
@@ -28,7 +29,6 @@
             <br>
             {{ Form::submit('Save', ['class' => 'rounded-0 btn btn-success']) }}
             {!!Form::close()!!}
-            </form>
         </center>
     </div>
     <div class="col-sm-4"></div>

@@ -43,6 +43,7 @@
                                 <th class="text-primary">Litres</th>
                                 <th class="text-success">Bill</th>
                                 <th class="text-success">Paid</th>
+                                <th class="text-success">SMS</th>
                             </tr>
                             @foreach($users as $user)
                                 @php
@@ -65,8 +66,17 @@
                                     <td class="text-success">KES {{ $units*100 }}</td>
                                     @if($waterPayment)
                                         <td class="text-success">KES {{ $waterPayment->amount }}</td>
+                                        <td class="text-success"></td>
                                     @else
                                         <td class="text-danger">KES 0</td>
+                                        <td>
+                                            {!!Form::open(["action" => "SMSController@store", "method" => "POST"])!!}
+                                            {{ Form::hidden('apartment', $user->apartment) }}
+                                            {{ Form::hidden('phone', $user->phone) }}
+                                            {{ Form::hidden('bill', $units * 100) }}
+                                            {{ Form::submit('Send', ['class' => 'btn btn-sm btn-success rounded-0']) }}
+                                            {!!Form::close()!!}
+                                        </td>
                                     @endif
                                 </tr>
                             @endforeach
