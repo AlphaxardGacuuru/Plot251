@@ -40,12 +40,12 @@ class SMSController extends Controller
     public function store(Request $request)
     {
         Http::withHeaders([
-            'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
-            // 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
-        ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-            // ])->post('https://api.africastalking.com/auth-token/generate', [
-            'username' => 'sandbox',
-            // 'username' => 'plot251',
+            // 'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
+            'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
+        // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+            ])->post('https://api.africastalking.com/auth-token/generate', [
+            // 'username' => 'sandbox',
+            'username' => 'plot251',
         ]);
 
         $F = $request->input('apartment');
@@ -57,10 +57,10 @@ class SMSController extends Controller
         echo "$F, $betterPhone, $message <br>";
 
         // Set your app credentials
-        $username = "sandbox";
-        // $username = "plot251";
+        // $username = "sandbox";
+        $username = "plot251";
         $apiKey = "be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b";
-        // $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
+        $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
 
         // Initialize the SDK
         $AT = new AfricasTalking($username, $apiKey);
@@ -94,12 +94,6 @@ class SMSController extends Controller
                                 foreach ($value1 as $key2 => $value2) {
                                     if (gettype($value2) == "array") {
                                         foreach ($value2 as $key3 => $value3) {
-                                            echo "<h3>" . $value3->statusCode . "</h3>";
-                                            echo "<h3>" . $value3->number . "</h3>";
-                                            echo "<h3>" . $value3->status . "</h3>";
-                                            echo "<h3>" . $value3->cost . "</h3>";
-                                            echo "<h3>" . $value3->messageId . "</h3>";
-
                                             // Save to database
                                             $sms = new SMS;
                                             $sms->message_id = $value3->messageId;
