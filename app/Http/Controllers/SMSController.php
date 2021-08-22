@@ -39,82 +39,91 @@ class SMSController extends Controller
      */
     public function store(Request $request)
     {
-        Http::withHeaders([
-            'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
-            // 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
-        ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-            // ])->post('https://api.africastalking.com/auth-token/generate', [
-            'username' => 'sandbox',
-            // 'username' => 'plot251',
-        ]);
+		$sms = new SMS;
+		$sms->message_id = $request->input('id');
+		$sms->status = $request->input('status');
+		$sms->number = $request->input('phoneNumber');
+		$sms->network_code = $request->input('networkCode');
+		$sms->failure_reason = $request->input('failureReason');
+		$sms->retry_count = $request->input('retryCount');
+		$sms->save();
+		
+        // Http::withHeaders([
+        //     'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
+        //     // 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
+        // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+        //     // ])->post('https://api.africastalking.com/auth-token/generate', [
+        //     'username' => 'sandbox',
+        //     // 'username' => 'plot251',
+        // ]);
 
-        $F = $request->input('apartment');
-        $bill = $request->input('bill');
-        $phone = $request->input('phone');
-        $betterPhone = substr_replace($phone, '+254', 0, -9);
-        $message = "Dear $F,\n your Current Bill: KES $bill is still due.\n Pay via Mpesa to Alphaxard Njoroge 0700364446.\n Thank you.";
+        // $F = $request->input('apartment');
+        // $bill = $request->input('bill');
+        // $phone = $request->input('phone');
+        // $betterPhone = substr_replace($phone, '+254', 0, -9);
+        // $message = "Dear $F,\n your Current Bill: KES $bill is still due.\n Pay via Mpesa to Alphaxard Njoroge 0700364446.\n Thank you.";
 
-        echo "$F, $betterPhone, $message <br>";
+        // echo "$F, $betterPhone, $message <br>";
 
-        // Set your app credentials
-        $username = "sandbox";
-        // $username = "plot251";
-        $apiKey = "be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b";
-        // $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
+        // // Set your app credentials
+        // $username = "sandbox";
+        // // $username = "plot251";
+        // $apiKey = "be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b";
+        // // $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
 
-        // Initialize the SDK
-        $AT = new AfricasTalking($username, $apiKey);
+        // // Initialize the SDK
+        // $AT = new AfricasTalking($username, $apiKey);
 
-        // Get the SMS service
-        $sms = $AT->sms();
+        // // Get the SMS service
+        // $sms = $AT->sms();
 
-        // Set the numbers you want to send to in international format
-        // $recipients = "+254700364446";
-        $recipients = $betterPhone;
+        // // Set the numbers you want to send to in international format
+        // // $recipients = "+254700364446";
+        // $recipients = $betterPhone;
 
-        // Set your message
-        // $message = "I'm a lumberjack and its ok, I sleep all night and I work all day";
+        // // Set your message
+        // // $message = "I'm a lumberjack and its ok, I sleep all night and I work all day";
 
-        // Set your shortCode or senderId
-        $from = "";
+        // // Set your shortCode or senderId
+        // $from = "";
 
-        if (strlen($betterPhone) > 5) {
-            try {
-                // Thats it, hit send and we'll take care of the rest
-                $result = $sms->send([
-                    'to' => $recipients,
-                    'message' => $message,
-                    'from' => $from
-                ]);
+        // if (strlen($betterPhone) > 5) {
+        //     try {
+        //         // Thats it, hit send and we'll take care of the rest
+        //         $result = $sms->send([
+        //             'to' => $recipients,
+        //             'message' => $message,
+        //             'from' => $from
+        //         ]);
 
-                foreach ($result as $key => $value) {
-                    if (gettype($value) != "string") {
-                        foreach ($value as $key1 => $value1) {
-                            if (gettype($value1) != "string") {
-                                foreach ($value1 as $key2 => $value2) {
-                                    if (gettype($value2) == "array") {
-                                        foreach ($value2 as $key3 => $value3) {
-                                            // Save to database
-                                            $sms = new SMS;
-                                            $sms->message_id = $value3->messageId;
-                                            $sms->number = $value3->number;
-                                            $sms->status = $value3->status;
-                                            $sms->status_code = $value3->statusCode;
-                                            $sms->cost = $value3->cost;
-                                            $sms->save();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch (Exception $e) {
-                echo "Error: " . $e->getMessage();
-            }
-        }
+        //         foreach ($result as $key => $value) {
+        //             if (gettype($value) != "string") {
+        //                 foreach ($value as $key1 => $value1) {
+        //                     if (gettype($value1) != "string") {
+        //                         foreach ($value1 as $key2 => $value2) {
+        //                             if (gettype($value2) == "array") {
+        //                                 foreach ($value2 as $key3 => $value3) {
+        //                                     // Save to database
+        //                                     $sms = new SMS;
+        //                                     $sms->message_id = $value3->messageId;
+        //                                     $sms->number = $value3->number;
+        //                                     $sms->status = $value3->status;
+        //                                     $sms->status_code = $value3->statusCode;
+        //                                     $sms->cost = $value3->cost;
+        //                                     $sms->save();
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     } catch (Exception $e) {
+        //         echo "Error: " . $e->getMessage();
+        //     }
+        // }
 
-        return redirect('water-readings')->with(['success' => 'Saved']);
+        // return redirect('water-readings')->with(['success' => 'Saved']);
     }
 
     /**
