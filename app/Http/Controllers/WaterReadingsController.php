@@ -60,12 +60,12 @@ class WaterReadingsController extends Controller
         ]);
 
         Http::withHeaders([
-            'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
-            // 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
-        ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-            // ])->post('https://api.africastalking.com/auth-token/generate', [
-            'username' => 'sandbox',
-            // 'username' => 'plot251',
+            // 'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
+            'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
+        // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+            ])->post('https://api.africastalking.com/auth-token/generate', [
+            // 'username' => 'sandbox',
+            'username' => 'plot251',
         ]);
 
         for ($i = 1; $i < 10; $i++) {
@@ -75,7 +75,7 @@ class WaterReadingsController extends Controller
             $waterReading = new WaterReadings;
             $waterReading->apartment = $F;
             $waterReading->reading = $newReading;
-            // $waterReading->save();
+            $waterReading->save();
 
             /* Get water reading for individual */
             $lastMonth = Carbon::now()->subMonth()->format("Y-m");
@@ -88,10 +88,10 @@ class WaterReadingsController extends Controller
             $message = "Dear Flat $i, your bill as at $betterDate:\nPrev Read: $lastReading->reading\nCurr Read: $newReading\nConsumption: $consumption\nCurrent Bill: KES $bill\nPay via Mpesa to Alphaxard Njoroge 0700364446. Thank you.";
 
             // Set your app credentials
-            $username = "sandbox";
-            // $username = "plot251";
-            $apiKey = "be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b";
-            // $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
+            // $username = "sandbox";
+            $username = "plot251";
+            // $apiKey = "be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b";
+            $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
 
             // Initialize the SDK
             $AT = new AfricasTalking($username, $apiKey);
@@ -109,52 +109,52 @@ class WaterReadingsController extends Controller
             // Set your shortCode or senderId
             $from = "";
 
-            // if (strlen($betterPhone) > 5) {
-            //     try {
-            //         // Thats it, hit send and we'll take care of the rest
-            //         $result = $sms->send([
-            //             'to' => $recipients,
-            //             'message' => $message,
-            //             'from' => $from,
-            //             'enqueue' => 1,
-            //         ]);
+            if (strlen($betterPhone) > 5) {
+                try {
+                    // Thats it, hit send and we'll take care of the rest
+                    $result = $sms->send([
+                        'to' => $recipients,
+                        'message' => $message,
+                        'from' => $from,
+                        'enqueue' => 1,
+                    ]);
 
-            //         foreach ($result as $key => $value) {
-            //             if (gettype($value) != "string") {
-            //                 foreach ($value as $key1 => $value1) {
-            //                     if (gettype($value1) != "string") {
-            //                         foreach ($value1 as $key2 => $value2) {
-            //                             if (gettype($value2) == "array") {
-            //                                 foreach ($value2 as $key3 => $value3) {
-            //                                     echo "<h3>" . $value3->statusCode . "</h3>";
-            //                                     echo "<h3>" . $value3->number . "</h3>";
-            //                                     echo "<h3>" . $value3->status . "</h3>";
-            //                                     echo "<h3>" . $value3->cost . "</h3>";
-            //                                     echo "<h3>" . $value3->messageId . "</h3>";
+                    foreach ($result as $key => $value) {
+                        if (gettype($value) != "string") {
+                            foreach ($value as $key1 => $value1) {
+                                if (gettype($value1) != "string") {
+                                    foreach ($value1 as $key2 => $value2) {
+                                        if (gettype($value2) == "array") {
+                                            foreach ($value2 as $key3 => $value3) {
+                                                echo "<h3>" . $value3->statusCode . "</h3>";
+                                                echo "<h3>" . $value3->number . "</h3>";
+                                                echo "<h3>" . $value3->status . "</h3>";
+                                                echo "<h3>" . $value3->cost . "</h3>";
+                                                echo "<h3>" . $value3->messageId . "</h3>";
 
-            //                                     // Save to database
-            //                                     $sms = new SMS;
-            //                                     $sms->message_id = $value3->messageId;
-            //                                     $sms->number = $value3->number;
-            //                                     $sms->text = $message;
-            //                                     $sms->status = $value3->status;
-            //                                     $sms->status_code = $value3->statusCode;
-            //                                     $sms->cost = $value3->cost;
-            //                                     $sms->save();
-            //                                 }
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     } catch (Exception $e) {
-            //         echo "Error: " . $e->getMessage();
-            //     }
-            // }
+                                                // Save to database
+                                                $sms = new SMS;
+                                                $sms->message_id = $value3->messageId;
+                                                $sms->number = $value3->number;
+                                                $sms->text = $message;
+                                                $sms->status = $value3->status;
+                                                $sms->status_code = $value3->statusCode;
+                                                $sms->cost = $value3->cost;
+                                                $sms->save();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+            }
         }
-        return "saved";
-        // return redirect('water-readings/create')->with(['success' => 'Saved']);
+
+        return redirect('water-readings/create')->with(['success' => 'Saved']);
     }
 
     /**
