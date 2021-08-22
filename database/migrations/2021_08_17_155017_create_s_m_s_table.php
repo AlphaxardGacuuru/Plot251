@@ -15,18 +15,18 @@ class CreateSMSTable extends Migration
     {
         Schema::create('s_m_s', function (Blueprint $table) {
             $table->id();
-            $table->string('message_id')->nullable();
-            $table->string('number')->nullable();
-            $table->string('status')->nullable();
-            $table->string('status_code')->nullable();
-            $table->string('cost')->nullable();
+            $table->char('message_id')->nullable();
+            $table->char('number')->nullable();
+            $table->char('status')->nullable();
+            $table->char('status_code')->nullable();
+            $table->char('cost')->nullable();
             // Delivery
-            $table->string('delivery_status')->nullable();
-            $table->string('network_code')->nullable();
-            $table->string('failure_reason')->nullable();
-            $table->string('retry_count')->nullable();
+            $table->char('delivery_status')->nullable();
+            $table->char('network_code')->nullable();
+            $table->char('failure_reason')->nullable();
+            $table->char('retry_count')->nullable();
             // Opt out
-            $table->string('opt_out')->nullable();
+            $table->char('opt_out')->nullable();
             $table->timestamps();
         });
     }

@@ -40,14 +40,14 @@ class SMSController extends Controller
     public function store(Request $request)
     {
 		$sms = new SMS;
-		$sms->message_id = $request->input('id');
-		$sms->status = $request->input('status');
-		$sms->number = $request->input('phoneNumber');
-		$sms->network_code = $request->input('networkCode');
-		$sms->failure_reason = $request->input('failureReason');
-		$sms->retry_count = $request->input('retryCount');
+		$sms->message_id = $request->id;
+		$sms->status = $request->status;
+		$sms->number = $request->phoneNumber;
+		$sms->network_code = $request->networkCode;
+		$sms->failure_reason = $request->failureReason;
+		$sms->retry_count = $request->retryCount;
 		$sms->save();
-		
+
         // Http::withHeaders([
         //     'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
         //     // 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',

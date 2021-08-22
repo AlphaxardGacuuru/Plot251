@@ -154,8 +154,8 @@ class WaterReadingsController extends Controller
             //     }
             // }
         }
-
-        return redirect('water-readings/create')->with(['success' => 'Saved']);
+        return "saved";
+        // return redirect('water-readings/create')->with(['success' => 'Saved']);
     }
 
     /**
