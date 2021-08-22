@@ -17,6 +17,7 @@ class CreateSMSTable extends Migration
             $table->id();
             $table->char('message_id')->nullable();
             $table->char('number')->nullable();
+            $table->char('text')->nullable();
             $table->char('status')->nullable();
             $table->char('status_code')->nullable();
             $table->char('cost')->nullable();

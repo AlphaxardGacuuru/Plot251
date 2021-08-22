@@ -87,8 +87,6 @@ class WaterReadingsController extends Controller
             $bill = $consumption * 100;
             $message = "Dear Flat $i, your bill as at $betterDate:\nPrev Read: $lastReading->reading\nCurr Read: $newReading\nConsumption: $consumption\nCurrent Bill: KES $bill\nPay via Mpesa to Alphaxard Njoroge 0700364446. Thank you.";
 
-            // echo "$F, $betterPhone, $message <br>";
-
             // Set your app credentials
             $username = "sandbox";
             // $username = "plot251";
@@ -111,48 +109,49 @@ class WaterReadingsController extends Controller
             // Set your shortCode or senderId
             $from = "";
 
-            // if (strlen($betterPhone) > 5) {
-            //     try {
-            //         // Thats it, hit send and we'll take care of the rest
-            //         $result = $sms->send([
-            //             'to' => $recipients,
-            //             'message' => $message,
-            //             'from' => $from,
-            //             'enqueue' => 1,
-            //         ]);
+            if (strlen($betterPhone) > 5) {
+                try {
+                    // Thats it, hit send and we'll take care of the rest
+                    $result = $sms->send([
+                        'to' => $recipients,
+                        'message' => $message,
+                        'from' => $from,
+                        'enqueue' => 1,
+                    ]);
 
-            //         foreach ($result as $key => $value) {
-            //             if (gettype($value) != "string") {
-            //                 foreach ($value as $key1 => $value1) {
-            //                     if (gettype($value1) != "string") {
-            //                         foreach ($value1 as $key2 => $value2) {
-            //                             if (gettype($value2) == "array") {
-            //                                 foreach ($value2 as $key3 => $value3) {
-            //                                     echo "<h3>" . $value3->statusCode . "</h3>";
-            //                                     echo "<h3>" . $value3->number . "</h3>";
-            //                                     echo "<h3>" . $value3->status . "</h3>";
-            //                                     echo "<h3>" . $value3->cost . "</h3>";
-            //                                     echo "<h3>" . $value3->messageId . "</h3>";
+                    foreach ($result as $key => $value) {
+                        if (gettype($value) != "string") {
+                            foreach ($value as $key1 => $value1) {
+                                if (gettype($value1) != "string") {
+                                    foreach ($value1 as $key2 => $value2) {
+                                        if (gettype($value2) == "array") {
+                                            foreach ($value2 as $key3 => $value3) {
+                                                echo "<h3>" . $value3->statusCode . "</h3>";
+                                                echo "<h3>" . $value3->number . "</h3>";
+                                                echo "<h3>" . $value3->status . "</h3>";
+                                                echo "<h3>" . $value3->cost . "</h3>";
+                                                echo "<h3>" . $value3->messageId . "</h3>";
 
-            //                                     // Save to database
-            //                                     $sms = new SMS;
-            //                                     $sms->message_id = $value3->messageId;
-            //                                     $sms->number = $value3->number;
-            //                                     $sms->status = $value3->status;
-            //                                     $sms->status_code = $value3->statusCode;
-            //                                     $sms->cost = $value3->cost;
-            //                                     $sms->save();
-            //                                 }
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     } catch (Exception $e) {
-            //         echo "Error: " . $e->getMessage();
-            //     }
-            // }
+                                                // Save to database
+                                                $sms = new SMS;
+                                                $sms->message_id = $value3->messageId;
+                                                $sms->number = $value3->number;
+                                                $sms->text = $message;
+                                                $sms->status = $value3->status;
+                                                $sms->status_code = $value3->statusCode;
+                                                $sms->cost = $value3->cost;
+                                                $sms->save();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+            }
         }
         return "saved";
         // return redirect('water-readings/create')->with(['success' => 'Saved']);

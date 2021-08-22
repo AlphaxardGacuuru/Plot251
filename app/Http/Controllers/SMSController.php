@@ -16,9 +16,16 @@ class SMSController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+		$sms = new SMS;
+		$sms->message_id = $request->id;
+		$sms->status = $request->status;
+		$sms->number = $request->phoneNumber;
+		$sms->network_code = $request->networkCode;
+		$sms->failure_reason = $request->failureReason;
+		$sms->retry_count = $request->retryCount;
+		$sms->save();
     }
 
     /**
@@ -46,7 +53,7 @@ class SMSController extends Controller
 		$sms->network_code = $request->networkCode;
 		$sms->failure_reason = $request->failureReason;
 		$sms->retry_count = $request->retryCount;
-		$sms->save();
+		// $sms->save();
 
         // Http::withHeaders([
         //     'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
@@ -107,6 +114,7 @@ class SMSController extends Controller
         //                                     $sms = new SMS;
         //                                     $sms->message_id = $value3->messageId;
         //                                     $sms->number = $value3->number;
+        //                                     $sms->text = $message;
         //                                     $sms->status = $value3->status;
         //                                     $sms->status_code = $value3->statusCode;
         //                                     $sms->cost = $value3->cost;
