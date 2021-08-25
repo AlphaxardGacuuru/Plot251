@@ -85,7 +85,7 @@ class WaterReadingsController extends Controller
             $betterPhone = substr_replace($user->phone, '+254', 0, -9);
             $consumption = $newReading - $lastReading->reading;
             $bill = $consumption * 100;
-            $message = "Dear Flat $i, your bill as at $betterDate:\nPrev Read: $lastReading->reading\nCurr Read: $newReading\nConsumption: $consumption\nCurrent Bill: KES $bill\nPay via Mpesa to Alphaxard Njoroge 0700364446. Thank you.";
+            $message = "Dear Flat $i,\nYour bill as at $betterDate:\nPrev Read: $lastReading->reading\nCurr Read: $newReading\nConsumption: $consumption\nCurrent Bill: KES $bill\nPay via Mpesa to Alphaxard Njoroge 0700364446. Thank you.";
 
             // Set your app credentials
             // $username = "sandbox";
