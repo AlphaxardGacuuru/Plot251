@@ -114,20 +114,15 @@ class SMSController extends Controller
                     echo "Error: " . $e->getMessage();
                 }
             }
-            return 'Saved';
-            // return redirect('water-readings')->with(['success' => 'Saved']);
+            return redirect('water-readings')->with(['success' => 'Saved']);
         } else {
-
-			// SMS::where('message_id', $request->id);
-            $sms = new SMS;
-            $sms->message_id = $request->input('id');
+			$sms = SMS::where('message_id', $request->id)->first();
             $sms->delivery_status = $request->input('status');
-            $sms->number = $request->input('phoneNumber');
             $sms->network_code = $request->input('networkCode');
             $sms->failure_reason = $request->input('failureReason');
             $sms->retry_count = $request->input('retryCount');
             $sms->save();
-        }
+        } 
     }
 
     /**
