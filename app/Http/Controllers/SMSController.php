@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // AfricasTalking
 use AfricasTalking\SDK\AfricasTalking;
 use App\SMS;
+use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -18,7 +19,45 @@ class SMSController extends Controller
      */
     public function index()
     {
-        //
+        $sms = SMS::get();
+
+        foreach ($sms as $key => $value) {
+            // Get apartment
+            $betterPhone = substr_replace($value->number, '0', 0, -9);
+
+            $apartment = User::where('phone', $betterPhone)->value('apartment');
+
+            // Assign network code to Telco that handled message
+            if ($value->network_code == 63902) {
+                $networkCode = "Safaricom";
+            } elseif ($value->network_code == 63903) {
+                $networkCode = "Airtel Kenya";
+            } elseif ($value->network_code == 63907) {
+                $networkCode = "Orange Kenya";
+            } elseif ($value->network_code == 63999) {
+                $networkCode = "Equitel Kenya";
+            } else {
+                $networkCode = $value->network_code;
+            }
+
+            // Create array
+            $sms[$key] = [
+                'apartment' => $apartment,
+                'number' => substr_replace($value->number, '0', 0, -9),
+                'text' => $value->text,
+                'status' => $value->status,
+                'statusCode' => $value->status_code,
+                'cost' => $value->cost,
+                'deliveryStatus' => $value->delivery_status,
+                'networkCode' => $networkCode,
+                'failureReason' => $value->failure_reason,
+                'sent' => $value->created_at->format("D M Y"),
+            ];
+        }
+
+        return view('/pages/sms')->with(['sms' => $sms]);
+        // return $newSms;
+
     }
 
     /**
@@ -28,7 +67,7 @@ class SMSController extends Controller
      */
     public function create()
     {
-        // return view('/pages/sms-create');
+        //
     }
 
     /**
@@ -44,8 +83,8 @@ class SMSController extends Controller
             Http::withHeaders([
                 // 'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
                 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
-            // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-                ])->post('https://api.africastalking.com/auth-token/generate', [
+                // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+            ])->post('https://api.africastalking.com/auth-token/generate', [
                 // 'username' => 'sandbox',
                 'username' => 'plot251',
             ]);
@@ -116,13 +155,13 @@ class SMSController extends Controller
             }
             return redirect('water-readings')->with(['success' => 'Saved']);
         } else {
-			$sms = SMS::where('message_id', $request->id)->first();
+            $sms = SMS::where('message_id', $request->id)->first();
             $sms->delivery_status = $request->input('status');
             $sms->network_code = $request->input('networkCode');
             $sms->failure_reason = $request->input('failureReason');
             $sms->retry_count = $request->input('retryCount');
             $sms->save();
-        } 
+        }
     }
 
     /**

@@ -26,8 +26,6 @@ class CreateSMSTable extends Migration
             $table->char('network_code')->nullable();
             $table->char('failure_reason')->nullable();
             $table->char('retry_count')->nullable();
-            // Opt out
-            $table->char('opt_out')->nullable();
             $table->timestamps();
         });
     }

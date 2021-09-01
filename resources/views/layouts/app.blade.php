@@ -82,8 +82,8 @@
 											<a href="/water-payments/create" class="p-3 dropdown-item border-bottom">
 												<h6>Payments</h6>
 											</a>
-											<a href="/sms/create" class="p-3 dropdown-item border-bottom">
-												<h6>Send SMS</h6>
+											<a href="/sms" class="p-3 dropdown-item border-bottom">
+												<h6>SMS</h6>
 											</a>
 											@else
 											<a href="/apartment/0" class="p-3 dropdown-item border-bottom">
