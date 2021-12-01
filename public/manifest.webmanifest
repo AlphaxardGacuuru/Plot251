@@ -7,8 +7,7 @@
 	"background_color": "#000",
 	"orientation": "portrait-primary",
 	"description": "Water Management App",
-	"icons": [
-	{
+	"icons": [{
             "src": "storage/img/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
@@ -19,6 +18,5 @@
             "sizes": "256x256",
             "type": "image/png",
 			"purpose": "any"
-	}
-]
+	}]
 }

@@ -79,7 +79,9 @@ class WaterReadingsController extends Controller
 
             /* Get water reading for individual */
             $lastMonth = Carbon::now()->subMonth()->format("Y-m");
-            $lastReading = WaterReadings::where('apartment', $F)->where('created_at', 'like', '%' . $lastMonth . '%')->first();
+            $lastReading = WaterReadings::where('apartment', $F)
+			->where('created_at', 'like', '%' . $lastMonth . '%')
+			->first();
             $user = User::where('apartment', $F)->first();
             $betterDate = Carbon::now()->format("d M Y");
             $betterPhone = substr_replace($user->phone, '+254', 0, -9);

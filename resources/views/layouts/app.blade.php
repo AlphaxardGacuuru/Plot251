@@ -15,7 +15,7 @@
 	<title>{{ config('app.name', 'Plot251') }}</title>
 
 	<!-- Favicon  -->
-	<link rel="icon" href="storage/img/favicon-32x32.png">
+	<link rel="icon" href="/storage/img/favicon-32x32.png">
 
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}" defer></script>
@@ -29,7 +29,7 @@
 	<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 	{{-- Manifest --}}
-	<link rel="manifest" type="application/manifest+json" href="manifest.webmanifest">
+	<link rel="manifest" type="application/manifest+json" href="/manifest.webmanifest">
 
 	{{-- IOS support --}}
 	<link rel="apple-touch-icon" href="storage/img/favicon-32x32.png">
