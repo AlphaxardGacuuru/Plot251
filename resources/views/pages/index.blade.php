@@ -1,10 +1,5 @@
 @extends('layouts/app')
-
 @section('content')
-@php
-    use App\WaterReadings;
-    use App\WaterPayments;
-@endphp
 <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
@@ -12,25 +7,31 @@
             <h1 style="color: #209CEE;">Plot 251 Management</h1>
             @auth
                 <h2>Water Bill</h2>
-                <h3>
-                    <a href="/water-readings/{{ $monthNum + 1 }}" class="btn btn-success rounded-0 float-left">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
-                        </svg>
-                        <span>prev</span>
-                    </a>
-                    {{ $month }}
-                    <a href="/water-readings/{{ $monthNum - 1 }}" class="btn btn-success rounded-0 float-right">
-                        <span>next</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-right" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                        </svg>
-                    </a>
-                </h3>
+                <h4>{{ $month }}</h4>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a href="/water-readings/{{ $monthNum + 1 }}"
+                            class="btn btn-success rounded-0 float-left">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                            </svg>
+                            <span>prev</span>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="/water-readings/{{ $monthNum - 1 }}" class="btn btn-success rounded-0 float-right">
+                            <span>next</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </a>
+                        </d>
+                    </div>
+                </div>
                 <br>
                 @if($lastReadingTot2 > 0 && $lastReadingTot > 0)
                     <div class="overflow-auto">
@@ -45,35 +46,30 @@
                                 <th class="text-success">Paid</th>
                                 <th class="text-success">SMS</th>
                             </tr>
-                            @foreach($users as $user)
-                                @php
-                                    /* Get units used per apartment */
-                                    $lastReading = WaterReadings::where('apartment', $user->apartment)
-                                    ->where('created_at', 'like', '%' . $lastMonth . '%')->first();
-                                    $lastReading2 = WaterReadings::where('apartment', $user->apartment)
-                                    ->where('created_at', 'like', '%' . $lastMonth2 . '%')->first();
-                                    $units = $lastReading->reading - $lastReading2->reading;
-                                    /* Get water payments per apartment */
-                                    $waterPayment = WaterPayments::where('apartment', $user->apartment)
-                                    ->where('created_at', 'like', '%' . $lastMonth . '%')->first();
-                                @endphp
+                            @foreach($apartments as $apartment)
                                 <tr>
-                                    <td>{{ $user->apartment }}</td>
-                                    <td><a href="/water/{{ $user->apartment }}">{{ $user->name }}</a></td>
-                                    <td>{{ $user->phone }}</td>
-                                    <td>{{ $units }}</td>
-                                    <td class="text-primary">{{ $units*1000 }}</td>
-                                    <td class="text-success">KES {{ $units*100 }}</td>
-                                    @if($waterPayment)
-                                        <td class="text-success">KES {{ $waterPayment->amount }}</td>
+                                    <td>{{ $apartment['apartment'] }}</td>
+                                    <td>{{ $apartment['name'] }}</td>
+                                    <td>{{ $apartment['phone'] }}</td>
+                                    <td>{{ $apartment['units'] }}</td>
+                                    <td class="text-primary">{{ $apartment['litres'] }}</td>
+                                    <td class="text-success">KES {{ $apartment['bill'] }}
+                                    </td>
+                                    @if($apartment['paid'])
+                                        <td class="text-success">KES
+                                            {{ $apartment['paid'] }}
+                                        </td>
                                         <td class="text-success"></td>
                                     @else
                                         <td class="text-danger">KES 0</td>
                                         <td>
-                                            {!!Form::open(["action" => "SMSController@store", "method" => "POST"])!!}
-                                            {{ Form::hidden('apartment', $user->apartment) }}
-                                            {{ Form::hidden('phone', $user->phone) }}
-                                            {{ Form::hidden('bill', $units * 100) }}
+                                            {!!Form::open([
+                                            "action" => "SMSController@store",
+                                            "method" => "POST"
+                                            ])!!}
+                                            {{ Form::hidden('apartment', $apartment['apartment']) }}
+                                            {{ Form::hidden('phone', $apartment['userPhone']) }}
+                                            {{ Form::hidden('bill', $apartment['bill']) }}
                                             {{ Form::submit('Send', ['class' => 'btn btn-sm btn-success rounded-0']) }}
                                             {!!Form::close()!!}
                                         </td>
@@ -85,8 +81,8 @@
                                 <td></td>
                                 <td></td>
                                 <td>{{ $totalUnits }}</td>
-                                <td class="text-primary">{{ $totalUnits*1000 }}</td>
-                                <td class="text-success">KES {{ $totalUnits*100 }}</td>
+                                <td class="text-primary">{{ $totalLitres }}</td>
+                                <td class="text-success">KES {{ $totalBill }}</td>
                                 <td class="text-success">KES {{ $totalPayments }}</td>
                             </tr>
                         </table>

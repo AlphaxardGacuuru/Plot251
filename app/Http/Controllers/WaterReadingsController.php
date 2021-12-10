@@ -60,12 +60,12 @@ class WaterReadingsController extends Controller
         ]);
 
         Http::withHeaders([
-            // 'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
-            'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
-        // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-            ])->post('https://api.africastalking.com/auth-token/generate', [
-            // 'username' => 'sandbox',
-            'username' => 'plot251',
+            // 'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
+            'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
+            // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+        ])->post('https://api.africastalking.com/auth-token/generate', [
+            // 'username' => env('AFRICASTKNG_USERNAME_SANDBOX'),
+            'username' => env('AFRICASTKNG_USERNAME'),
         ]);
 
         for ($i = 1; $i < 10; $i++) {
@@ -80,8 +80,8 @@ class WaterReadingsController extends Controller
             /* Get water reading for individual */
             $lastMonth = Carbon::now()->subMonth()->format("Y-m");
             $lastReading = WaterReadings::where('apartment', $F)
-			->where('created_at', 'like', '%' . $lastMonth . '%')
-			->first();
+                ->where('created_at', 'like', '%' . $lastMonth . '%')
+                ->first();
             $user = User::where('apartment', $F)->first();
             $betterDate = Carbon::now()->format("d M Y");
             $betterPhone = substr_replace($user->phone, '+254', 0, -9);
@@ -167,13 +167,55 @@ class WaterReadingsController extends Controller
      */
     public function show($monthNum)
     {
-        $users = User::skip(1)->take(9)->get();
-        $waterReadings = WaterReadings::get();
-        $month = Carbon::now()->subMonth($monthNum + 1)->format("F");
         /* Months to query */
+        $month = Carbon::now()->subMonth($monthNum + 1)->format("F");
         $lastMonth = Carbon::now()->subMonth($monthNum)->format("Y-m");
         $lastMonth2 = Carbon::now()->subMonth($monthNum + 1)->format("Y-m");
         $lastMonth3 = Carbon::now()->subMonth($monthNum + 2)->format("Y-m");
+
+        $users = User::skip(1)->take(9)->get();
+        $apartments = [];
+
+        // Generate apartments list
+        foreach ($users as $key => $user) {
+            /* Get units used per apartment */
+            $lastReading = WaterReadings::where('apartment', $user->apartment)
+                ->where('created_at', 'like', '%' . $lastMonth . '%')
+                ->first();
+            $lastReading2 = WaterReadings::where('apartment', $user->apartment)
+                ->where('created_at', 'like', '%' . $lastMonth2 . '%')
+                ->first();
+            $units = $lastReading->reading - $lastReading2->reading;
+
+            /* Get water payments per apartment */
+            $waterPayment = WaterPayments::where('apartment', $user->apartment)
+                ->where('created_at', 'like', '%' . $lastMonth . '%')
+                ->first();
+
+            // Get data
+            if ($monthNum == 0) {
+                $name = $user->name;
+                $phone = $user->phone;
+                $amount = $user->amount;
+            } else {
+                $name = $waterPayment ? $waterPayment->name : "";
+                $phone = $waterPayment ? $waterPayment->phone : "";
+                $amount = $waterPayment ? $waterPayment->amount : "";
+            }
+
+            // Populate array
+            array_push($apartments, [
+                'name' => $name,
+                'phone' => $phone,
+                'apartment' => $user->apartment,
+                'userPhone' => $user->phone,
+                'units' => $units,
+                'litres' => $units * 1000,
+                'bill' => $units * 100,
+                'paid' => $amount,
+            ]);
+        }
+
         /* Get total units used */
         $lastReadingTot = WaterReadings::where('created_at', 'like', '%' . $lastMonth . '%')->sum('reading');
         $lastReadingTot2 = WaterReadings::where('created_at', 'like', '%' . $lastMonth2 . '%')->sum('reading');
@@ -196,21 +238,19 @@ class WaterReadingsController extends Controller
         }
 
         return view('pages/index')->with([
-            'users' => $users,
-            'waterReadings' => $waterReadings,
+            'apartments' => $apartments,
             'month' => $month,
             'monthNum' => $monthNum,
-            'lastMonth' => $lastMonth,
-            'lastMonth2' => $lastMonth2,
-            'lastMonth3' => $lastMonth3,
             'lastReadingTot' => $lastReadingTot,
             'lastReadingTot2' => $lastReadingTot2,
             'lastReadingTot3' => $lastReadingTot3,
             'totalUnits' => $totalUnits,
+            'totalLitres' => $totalUnits * 1000,
+            'totalBill' => $totalUnits * 100,
+            'totalPayments' => $totalPayments,
             'proportion' => $proportion,
             'moreOrLess' => $moreOrLess,
             'class' => $class,
-            'totalPayments' => $totalPayments,
         ]);
     }
 

@@ -17,10 +17,6 @@
 	<!-- Favicon  -->
 	<link rel="icon" href="/storage/img/favicon-32x32.png">
 
-	<!-- Scripts -->
-	<script src="{{ asset('js/app.js') }}" defer></script>
-	<script src="{{ asset('js/custom.js') }}" defer></script>
-
 	<!-- Fonts -->
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
@@ -38,8 +34,7 @@
 </head>
 
 <body>
-	<div id="app">
-
+	<div id="app" style="overflow-x: hidden;">
 		<!-- ***** Header Area Start ***** -->
 		<header style="background-color: #232323" class="header-area">
 			<div class="container-fluid">
@@ -114,7 +109,6 @@
 		</header>
 		<!-- ***** Header Area End ***** -->
 		<br>
-
 		<div class="row">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-4">
@@ -125,10 +119,14 @@
 			<div class="col-sm-4"></div>
 		</div>
 
-		<main class="py-4">
+		<main class="py-4 px-2">
 			@yield('content')
 		</main>
 	</div>
+
+	<!-- Scripts -->
+	<script src="{{ asset('js/app.js') }}" defer></script>
+	<script src="{{ asset('js/custom.js') }}" defer></script>
 </body>
 
 </html>

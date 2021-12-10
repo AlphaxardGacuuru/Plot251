@@ -19,7 +19,7 @@ class SMSController extends Controller
      */
     public function index()
     {
-        $sms = SMS::get();
+        $sms = SMS::orderBy('created_at', 'DESC')->get();
 
         foreach ($sms as $key => $value) {
             // Get apartment
@@ -51,7 +51,7 @@ class SMSController extends Controller
                 'deliveryStatus' => $value->delivery_status,
                 'networkCode' => $networkCode,
                 'failureReason' => $value->failure_reason,
-                'sent' => $value->created_at->format("D M Y"),
+                'sent' => $value->created_at->format("D d M Y"),
             ];
         }
 
