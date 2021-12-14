@@ -61,7 +61,8 @@
                                         </td>
                                         <td class="text-success"></td>
                                     @else
-                                        <td class="text-danger">KES 0</td>
+                                        <td class="text-danger">KES 0 {{ $apartment['paid'] }}
+                                        </td>
                                         <td>
                                             {!!Form::open([
                                             "action" => "SMSController@store",

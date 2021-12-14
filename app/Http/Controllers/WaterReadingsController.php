@@ -167,90 +167,108 @@ class WaterReadingsController extends Controller
      */
     public function show($monthNum)
     {
-        /* Months to query */
-        $month = Carbon::now()->subMonth($monthNum + 1)->format("F");
-        $lastMonth = Carbon::now()->subMonth($monthNum)->format("Y-m");
-        $lastMonth2 = Carbon::now()->subMonth($monthNum + 1)->format("Y-m");
-        $lastMonth3 = Carbon::now()->subMonth($monthNum + 2)->format("Y-m");
+        if ($monthNum >= 0) {
+            /* Months to query */
+            $month = Carbon::now()->subMonth($monthNum + 1)->format("F");
+            $lastMonth = Carbon::now()->subMonth($monthNum)->format("Y-m");
+            $lastMonth2 = Carbon::now()->subMonth($monthNum + 1)->format("Y-m");
+            $lastMonth3 = Carbon::now()->subMonth($monthNum + 2)->format("Y-m");
 
-        $users = User::skip(1)->take(9)->get();
-        $apartments = [];
+            $users = User::skip(1)->take(9)->get();
+            $apartments = [];
 
-        // Generate apartments list
-        foreach ($users as $key => $user) {
-            /* Get units used per apartment */
-            $lastReading = WaterReadings::where('apartment', $user->apartment)
-                ->where('created_at', 'like', '%' . $lastMonth . '%')
-                ->first();
-            $lastReading2 = WaterReadings::where('apartment', $user->apartment)
-                ->where('created_at', 'like', '%' . $lastMonth2 . '%')
-                ->first();
-            $units = $lastReading->reading - $lastReading2->reading;
+            // Generate apartments list
+            foreach ($users as $key => $user) {
+                /* Get units used per apartment */
+                $lastReading = WaterReadings::where('apartment', $user->apartment)
+                    ->where('created_at', 'like', '%' . $lastMonth . '%')
+                    ->first();
+                $lastReading2 = WaterReadings::where('apartment', $user->apartment)
+                    ->where('created_at', 'like', '%' . $lastMonth2 . '%')
+                    ->first();
+                $units = $lastReading->reading - $lastReading2->reading;
 
-            /* Get water payments per apartment */
-            $waterPayment = WaterPayments::where('apartment', $user->apartment)
-                ->where('created_at', 'like', '%' . $lastMonth . '%')
-                ->first();
+                /* Get water payments per apartment */
+                $waterPayment = WaterPayments::where('apartment', $user->apartment)
+                    ->where('created_at', 'like', '%' . $lastMonth . '%')
+                    ->first();
 
-            // Get data
-            if ($monthNum == 0) {
-                $name = $user->name;
-                $phone = $user->phone;
-                $amount = $user->amount;
-            } else {
-                $name = $waterPayment ? $waterPayment->name : "";
-                $phone = $waterPayment ? $waterPayment->phone : "";
-                $amount = $waterPayment ? $waterPayment->amount : "";
+                // Get data
+                if ($monthNum == 0) {
+                    $name = $user->name;
+                    $phone = $user->phone;
+                    $amount = $waterPayment ? $waterPayment->amount : "";
+                } else {
+                    $name = $waterPayment ? $waterPayment->name : "";
+                    $phone = $waterPayment ? $waterPayment->phone : "";
+                    $amount = $waterPayment ? $waterPayment->amount : "";
+                }
+
+                // Populate array
+                array_push($apartments, [
+                    'name' => $name,
+                    'phone' => $phone,
+                    'apartment' => $user->apartment,
+                    'userPhone' => $user->phone,
+                    'units' => $units,
+                    'litres' => $units * 1000,
+                    'bill' => $units * 100,
+                    'paid' => $amount,
+                ]);
             }
 
-            // Populate array
-            array_push($apartments, [
-                'name' => $name,
-                'phone' => $phone,
-                'apartment' => $user->apartment,
-                'userPhone' => $user->phone,
-                'units' => $units,
-                'litres' => $units * 1000,
-                'bill' => $units * 100,
-                'paid' => $amount,
+            /* Get total units used */
+            $lastReadingTot = WaterReadings::where('created_at', 'like', '%' . $lastMonth . '%')->sum('reading');
+            $lastReadingTot2 = WaterReadings::where('created_at', 'like', '%' . $lastMonth2 . '%')->sum('reading');
+            $lastReadingTot3 = WaterReadings::where('created_at', 'like', '%' . $lastMonth3 . '%')->sum('reading');
+            $totalUnits = $lastReadingTot - $lastReadingTot2;
+            $proportion = $totalUnits - ($lastReadingTot2 - $lastReadingTot3);
+            $proportion = ($proportion * 100) / ($lastReadingTot2 - $lastReadingTot3);
+            $proportion = round($proportion);
+            /* Get total units used */
+            $totalPayments = WaterPayments::where('created_at', 'like', '%' . $lastMonth . '%')->sum('amount');
+
+            /* Format proportion to show relative usage nicely */
+            if ($proportion < 0) {
+                $proportion = abs($proportion);
+                $moreOrLess = "Less than last Month";
+                $class = "success";
+            } else {
+                $moreOrLess = "More than last Month";
+                $class = "danger";
+            }
+
+            return view('pages/index')->with([
+                'apartments' => $apartments,
+                'month' => $month,
+                'monthNum' => $monthNum,
+                'lastReadingTot' => $lastReadingTot,
+                'lastReadingTot2' => $lastReadingTot2,
+                'lastReadingTot3' => $lastReadingTot3,
+                'totalUnits' => $totalUnits,
+                'totalLitres' => $totalUnits * 1000,
+                'totalBill' => $totalUnits * 100,
+                'totalPayments' => $totalPayments,
+                'proportion' => $proportion,
+                'moreOrLess' => $moreOrLess,
+                'class' => $class,
             ]);
         }
-
-        /* Get total units used */
-        $lastReadingTot = WaterReadings::where('created_at', 'like', '%' . $lastMonth . '%')->sum('reading');
-        $lastReadingTot2 = WaterReadings::where('created_at', 'like', '%' . $lastMonth2 . '%')->sum('reading');
-        $lastReadingTot3 = WaterReadings::where('created_at', 'like', '%' . $lastMonth3 . '%')->sum('reading');
-        $totalUnits = $lastReadingTot - $lastReadingTot2;
-        $proportion = $totalUnits - ($lastReadingTot2 - $lastReadingTot3);
-        $proportion = ($proportion * 100) / ($lastReadingTot2 - $lastReadingTot3);
-        $proportion = round($proportion);
-        /* Get total units used */
-        $totalPayments = WaterPayments::where('created_at', 'like', '%' . $lastMonth . '%')->sum('amount');
-
-        /* Format proportion to show relative usage nicely */
-        if ($proportion < 0) {
-            $proportion = abs($proportion);
-            $moreOrLess = "Less than last Month";
-            $class = "success";
-        } else {
-            $moreOrLess = "More than last Month";
-            $class = "danger";
-        }
-
+		
         return view('pages/index')->with([
-            'apartments' => $apartments,
-            'month' => $month,
+            'apartments' => [],
+            'month' => '',
             'monthNum' => $monthNum,
-            'lastReadingTot' => $lastReadingTot,
-            'lastReadingTot2' => $lastReadingTot2,
-            'lastReadingTot3' => $lastReadingTot3,
-            'totalUnits' => $totalUnits,
-            'totalLitres' => $totalUnits * 1000,
-            'totalBill' => $totalUnits * 100,
-            'totalPayments' => $totalPayments,
-            'proportion' => $proportion,
-            'moreOrLess' => $moreOrLess,
-            'class' => $class,
+            'lastReadingTot' => '',
+            'lastReadingTot2' => '',
+            'lastReadingTot3' => '',
+            'totalUnits' => '',
+            'totalLitres' => '',
+            'totalBill' => '',
+            'totalPayments' => '',
+            'proportion' => '',
+            'moreOrLess' => '',
+            'class' => '',
         ]);
     }
 
