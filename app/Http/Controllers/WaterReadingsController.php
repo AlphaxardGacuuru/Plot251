@@ -59,14 +59,14 @@ class WaterReadingsController extends Controller
             'F1' => 'required',
         ]);
 
-        Http::withHeaders([
-            // 'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
-            'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
-            // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-        ])->post('https://api.africastalking.com/auth-token/generate', [
-            // 'username' => env('AFRICASTKNG_USERNAME_SANDBOX'),
-            'username' => env('AFRICASTKNG_USERNAME'),
-        ]);
+        // Http::withHeaders([
+        //     // 'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
+        //     'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
+        //     // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+        // ])->post('https://api.africastalking.com/auth-token/generate', [
+        //     // 'username' => env('AFRICASTKNG_USERNAME_SANDBOX'),
+        //     'username' => env('AFRICASTKNG_USERNAME'),
+        // ]);
 
         for ($i = 1; $i < 10; $i++) {
             $F = "F" . $i;
@@ -114,42 +114,42 @@ class WaterReadingsController extends Controller
             if (strlen($betterPhone) > 5) {
                 try {
                     // Thats it, hit send and we'll take care of the rest
-                    $result = $sms->send([
-                        'to' => $recipients,
-                        'message' => $message,
-                        'from' => $from,
-                        'enqueue' => 1,
-                    ]);
+                    // $result = $sms->send([
+                    //     'to' => $recipients,
+                    //     'message' => $message,
+                    //     'from' => $from,
+                    //     'enqueue' => 1,
+                    // ]);
 
-                    foreach ($result as $key => $value) {
-                        if (gettype($value) != "string") {
-                            foreach ($value as $key1 => $value1) {
-                                if (gettype($value1) != "string") {
-                                    foreach ($value1 as $key2 => $value2) {
-                                        if (gettype($value2) == "array") {
-                                            foreach ($value2 as $key3 => $value3) {
-                                                echo "<h3>" . $value3->statusCode . "</h3>";
-                                                echo "<h3>" . $value3->number . "</h3>";
-                                                echo "<h3>" . $value3->status . "</h3>";
-                                                echo "<h3>" . $value3->cost . "</h3>";
-                                                echo "<h3>" . $value3->messageId . "</h3>";
+                    // foreach ($result as $key => $value) {
+                    //     if (gettype($value) != "string") {
+                    //         foreach ($value as $key1 => $value1) {
+                    //             if (gettype($value1) != "string") {
+                    //                 foreach ($value1 as $key2 => $value2) {
+                    //                     if (gettype($value2) == "array") {
+                    //                         foreach ($value2 as $key3 => $value3) {
+                    //                             echo "<h3>" . $value3->statusCode . "</h3>";
+                    //                             echo "<h3>" . $value3->number . "</h3>";
+                    //                             echo "<h3>" . $value3->status . "</h3>";
+                    //                             echo "<h3>" . $value3->cost . "</h3>";
+                    //                             echo "<h3>" . $value3->messageId . "</h3>";
 
-                                                // Save to database
-                                                $sms = new SMS;
-                                                $sms->message_id = $value3->messageId;
-                                                $sms->number = $value3->number;
-                                                $sms->text = $message;
-                                                $sms->status = $value3->status;
-                                                $sms->status_code = $value3->statusCode;
-                                                $sms->cost = $value3->cost;
-                                                $sms->save();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //                             // Save to database
+                    //                             $sms = new SMS;
+                    //                             $sms->message_id = $value3->messageId;
+                    //                             $sms->number = $value3->number;
+                    //                             $sms->text = $message;
+                    //                             $sms->status = $value3->status;
+                    //                             $sms->status_code = $value3->statusCode;
+                    //                             $sms->cost = $value3->cost;
+                    //                             $sms->save();
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // }
                 } catch (Exception $e) {
                     echo "Error: " . $e->getMessage();
                 }
@@ -193,12 +193,14 @@ class WaterReadingsController extends Controller
                     ->where('created_at', 'like', '%' . $lastMonth . '%')
                     ->first();
 
-                // Get data
+                // Get correct data depending on whether the user has paid or not
+				// Show data of current tenant
                 if ($monthNum == 0) {
                     $name = $user->name;
                     $phone = $user->phone;
                     $amount = $waterPayment ? $waterPayment->amount : "";
                 } else {
+					// Show info of the person who paid
                     $name = $waterPayment ? $waterPayment->name : "";
                     $phone = $waterPayment ? $waterPayment->phone : "";
                     $amount = $waterPayment ? $waterPayment->amount : "";

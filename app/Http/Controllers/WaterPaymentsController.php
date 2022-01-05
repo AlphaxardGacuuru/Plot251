@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\WaterPayments;
+use App\User;
 use Illuminate\Http\Request;
 
 class WaterPaymentsController extends Controller
@@ -46,6 +47,8 @@ class WaterPaymentsController extends Controller
     public function store(Request $request)
     {
         $waterPayment = new WaterPayments;
+		$waterPayment->name = User::where('apartment', $request->input('apartment'))->first()->name;
+		$waterPayment->phone = User::where('apartment', $request->input('apartment'))->first()->phone;
         $waterPayment->apartment = $request->input('apartment');
         $waterPayment->amount = $request->input('amount');
         $waterPayment->save();
