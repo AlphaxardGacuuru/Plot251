@@ -47,45 +47,62 @@
                                 <th class="text-success">SMS</th>
                             </tr>
                             @foreach($apartments as $apartment)
-                                <tr>
-                                    <td>{{ $apartment['apartment'] }}</td>
-                                    <td>{{ $apartment['name'] }}</td>
-                                    <td>{{ $apartment['phone'] }}</td>
-                                    <td>{{ $apartment['units'] }}</td>
-                                    <td class="text-primary">{{ $apartment['litres'] }}</td>
-                                    <td class="text-success">KES {{ $apartment['bill'] }}
-                                    </td>
-                                    @if($apartment['paid'])
-                                        <td class="text-success">KES
-                                            {{ $apartment['paid'] }}
+                                @if($apartment['apartment']
+                                    == Auth::user()->apartment
+                                    || Auth::user()->name == "Admin")
+                                    <tr>
+                                        <td>{{ $apartment['apartment'] }}</td>
+                                        <td>{{ $apartment['name'] }}</td>
+                                        <td>{{ $apartment['phone'] }}</td>
+                                        <td>{{ $apartment['units'] }}</td>
+                                        <td class="text-primary">{{ $apartment['litres'] }}</td>
+                                        <td class="text-success">KES {{ $apartment['bill'] }}
                                         </td>
-                                        <td class="text-success"></td>
-                                    @else
-                                        <td class="text-danger">KES 0 {{ $apartment['paid'] }}
-                                        </td>
-                                        <td>
-                                            {!!Form::open([
-                                            "action" => "SMSController@store",
-                                            "method" => "POST"
-                                            ])!!}
-                                            {{ Form::hidden('apartment', $apartment['apartment']) }}
-                                            {{ Form::hidden('phone', $apartment['userPhone']) }}
-                                            {{ Form::hidden('bill', $apartment['bill']) }}
-                                            {{ Form::submit('Send', ['class' => 'btn btn-sm btn-success rounded-0']) }}
-                                            {!!Form::close()!!}
-                                        </td>
-                                    @endif
-                                </tr>
+                                        @if($apartment['paid'])
+                                            <td class="text-success">
+                                                KES {{ $apartment['paid'] }}
+                                            </td>
+                                            <td class="text-success"></td>
+                                        @else
+                                            <td class="text-danger">KES 0</td>
+                                            <td>
+                                                @if(Auth::user()->name ==
+                                                    "Admin")
+                                                    {!!Form::open(["action" => "SMSController@store", "method" =>
+                                                    "POST"])!!}
+                                                    {{ Form::hidden('apartment', $apartment['apartment']) }}
+                                                    {{ Form::hidden('phone', $apartment['userPhone']) }}
+                                                    {{ Form::hidden('bill', $apartment['bill']) }}
+                                                    {{ Form::submit('Send', ['class' => 'btn btn-sm btn-success rounded-0']) }}
+                                                    {!!Form::close()!!}
+                                                @else
+                                                    {!!Form::open(["action" => "WaterPaymentsController@store", "method"
+                                                    =>
+                                                    "POST"])!!}
+                                                    {{ Form::hidden('apartment', $apartment['apartment']) }}
+                                                    {{ Form::hidden('phone', $apartment['userPhone']) }}
+                                                    {{ Form::hidden('bill', $apartment['bill']) }}
+                                                    {{ Form::submit('Pay', ['class' => 'btn btn-sm btn-success rounded-0']) }}
+                                                    {!!Form::close()!!}
+                                                @endif
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endif
                             @endforeach
-                            <tr class="font-weight-bold">
-                                <td>Totals</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ $totalUnits }}</td>
-                                <td class="text-primary">{{ $totalLitres }}</td>
-                                <td class="text-success">KES {{ $totalBill }}</td>
-                                <td class="text-success">KES {{ $totalPayments }}</td>
-                            </tr>
+                            @if($apartment['apartment']
+                                == Auth::user()->apartment
+                                || Auth::user()->name == "Admin")
+                                <tr class="font-weight-bold">
+                                    <td>Totals</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{ $totalUnits }}</td>
+                                    <td class="text-primary">{{ $totalLitres }}</td>
+                                    <td class="text-success">KES {{ $totalBill }}</td>
+                                    <td class="text-success">KES {{ $totalPayments }}</td>
+                                </tr>
+                            @endif
                         </table>
                     </div>
                     <br>

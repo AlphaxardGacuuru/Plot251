@@ -31,9 +31,6 @@ class WaterReadingsController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->name != 'Admin') {
-            return redirect('apartment/0');
-        }
         return redirect('water-readings/0');
     }
 
@@ -175,6 +172,7 @@ class WaterReadingsController extends Controller
             $lastMonth3 = Carbon::now()->subMonth($monthNum + 2)->format("Y-m");
 
             $users = User::skip(1)->take(9)->get();
+			
             $apartments = [];
 
             // Generate apartments list
@@ -206,6 +204,7 @@ class WaterReadingsController extends Controller
                         'class' => '',
                     ]);
                 }
+
                 $units = $lastReading->reading - $lastReading2->reading;
 
                 /* Get water payments per apartment */
