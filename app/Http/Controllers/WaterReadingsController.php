@@ -186,6 +186,26 @@ class WaterReadingsController extends Controller
                 $lastReading2 = WaterReadings::where('apartment', $user->apartment)
                     ->where('created_at', 'like', '%' . $lastMonth2 . '%')
                     ->first();
+
+                // Check if records for last month are available then return page
+                if (!$lastReading) {
+
+                    return view('pages/index')->with([
+                        'apartments' => [],
+                        'month' => '',
+                        'monthNum' => $monthNum,
+                        'lastReadingTot' => '',
+                        'lastReadingTot2' => '',
+                        'lastReadingTot3' => '',
+                        'totalUnits' => '',
+                        'totalLitres' => '',
+                        'totalBill' => '',
+                        'totalPayments' => '',
+                        'proportion' => '',
+                        'moreOrLess' => '',
+                        'class' => '',
+                    ]);
+                }
                 $units = $lastReading->reading - $lastReading2->reading;
 
                 /* Get water payments per apartment */
