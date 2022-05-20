@@ -1,5 +1,5 @@
 <!-- ***** Header Area Start ***** -->
-<header style="background-color: #232323" class="header-area">
+<header class="header-area bg-primary">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -22,12 +22,12 @@
                         <div class="header-social-area d-flex align-items-center">
                             <!-- Authentication Links -->
                             @guest
-                                <li class="nav-item">
+                                <li class="nav-item" style="list-style-type: none;">
                                     <a class="display-4"
                                         href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                                 @if(Route::has('register'))
-                                    <li class="nav-item">
+                                    <li class="nav-item" style="list-style-type: none;">
                                         <a class="display-4"
                                             href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
@@ -42,6 +42,9 @@
                                         aria-labelledby="dropdownMenuButton">
                                         @if(Auth::user()->name ==
                                             "Admin")
+                                            <a href='/apartment' class="p-3 dropdown-item border-bottom">
+                                                <h6>Accounts</h6>
+                                            </a>
                                             <a href='/water-readings/create' class="p-3 dropdown-item border-bottom">
                                                 <h6>Readings</h6>
                                             </a>

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card" style="display: none;">
+            <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
@@ -16,7 +16,7 @@
                                 class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror rounded-0"
                                     name="name" value="{{ old('name') }}" required autocomplete="name"
                                     autofocus>
 
@@ -33,11 +33,28 @@
                                 class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror rounded-0"
                                     name="email" value="{{ old('email') }}" required
                                     autocomplete="email">
 
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="phone"
+                                class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="tel" class="form-control @error('phone') is-invalid @enderror rounded-0"
+                                    name="phone" value="{{ old('phone') }}" required
+                                    autocomplete="phone">
+
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -51,7 +68,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    class="form-control @error('password') is-invalid @enderror rounded-0" name="password"
                                     required autocomplete="new-password">
 
                                 @error('password')
@@ -67,14 +84,14 @@
                                 class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control"
+                                <input id="password-confirm" type="password" class="form-control rounded-0"
                                     name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success rounded-0">
                                     {{ __('Register') }}
                                 </button>
                             </div>

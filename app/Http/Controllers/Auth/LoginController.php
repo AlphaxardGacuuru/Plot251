@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/apartment/0';
+    protected $redirectTo = '/0';
 
     /* Change identifier to phone */
     public function username()
