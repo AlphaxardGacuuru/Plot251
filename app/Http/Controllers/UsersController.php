@@ -71,10 +71,7 @@ class UsersController extends Controller
     {
         $apartment = User::where('apartment', $id)->first();
 
-        return view('pages/user-edit')->with([
-            'id' => $id,
-            'apartment' => $apartment,
-        ]);
+        return view('pages/user-edit')->with(['apartment' => $apartment]);
     }
 
     /**
@@ -84,9 +81,28 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $apartment)
     {
-        //
+        $this->validate($request, [
+            "name" => "string",
+            "email" => "string",
+            "phone" => "numeric|startsWith:0",
+        ]);
+
+        // Get Id
+        $id = User::where("apartment", $apartment)->first()->id;
+
+        $apartment = User::find($id);
+        $request->filled("name") && $apartment->name = $request->input("name");
+        $request->filled("email") && $apartment->email = $request->input("email");
+        $request->filled("phone") && $apartment->phone = $request->input("phone");
+        $apartment->save();
+
+        return redirect("apartments/" . $apartment->apartment . "/edit")
+            ->with([
+                "success" => "Apartment Edited",
+                "apartment" => $apartment->first(),
+            ]);
     }
 
     /**

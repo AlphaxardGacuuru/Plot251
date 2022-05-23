@@ -5,8 +5,10 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <center>
-            <h1>Edit {{ $id }}</h1>
-            {{ Form::open(["action" => ["UsersController@update", $id], "method" => "POST"]) }}
+            <h1>Edit {{ $apartment->apartment }}</h1>
+            <br />
+            {{ Form::open(["action" => ["UsersController@update", $apartment->apartment], "method" => "POST"]) }}
+            {{ Form::hidden("_method", "PUT") }}
             {{ Form::text('name', $apartment->name, ["placeholder" => "Name", "class" => "form-control rounded-0"]) }}
             <br />
             {{ Form::text('email', $apartment->email, ["placeholder" => "Email", "class" => "form-control rounded-0"]) }}
