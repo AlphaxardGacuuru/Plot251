@@ -18,7 +18,7 @@ Route::redirect('/', 'water-readings');
 Auth::routes();
 
 Route::resources([
-    'apartment' => 'UsersController',
+    'apartments' => 'UsersController',
     'water-readings' => 'WaterReadingsController',
     'water-payments' => 'WaterPaymentsController',
     'sms' => 'SMSController',

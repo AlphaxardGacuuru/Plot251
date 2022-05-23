@@ -70,7 +70,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-10">
-                                <button type="submit" class="btn btn-success rounded-0">
+                                <button type="submit" class="btn btn-primary rounded-0">
                                     {{ __('Login') }}
                                 </button>
 

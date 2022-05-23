@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\WaterReadings;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -26,7 +24,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::skip(1)->take(9)->get();
+
+        return view('pages/user')->with(['users' => $users]);
     }
 
     /**
@@ -58,7 +58,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-		// 
+        //
     }
 
     /**
@@ -69,7 +69,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('pages/user-edit');
     }
 
     /**

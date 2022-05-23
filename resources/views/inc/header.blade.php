@@ -42,7 +42,7 @@
                                         aria-labelledby="dropdownMenuButton">
                                         @if(Auth::user()->name ==
                                             "Admin")
-                                            <a href='/apartment' class="p-3 dropdown-item border-bottom">
+                                            <a href='/apartments' class="p-3 dropdown-item border-bottom">
                                                 <h6>Accounts</h6>
                                             </a>
                                             <a href='/water-readings/create' class="p-3 dropdown-item border-bottom">
