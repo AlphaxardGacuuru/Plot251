@@ -18,12 +18,8 @@
                         <td>{{ $apartment->apartment }}</td>
                         <td>{{ $apartment->name }}</td>
                         <td>{{ $apartment->phone }}</td>
-                        <td><a href="/apartments/edit" class="btn btn-sm btn-primary rounded-0">Edit</a></td>
-                        <td>
-                            {{ Form::open() }}
-                            {{ Form::hidden('apartment', $apartment->apartment) }}
-                            {{ Form::close() }}
-                        </td>
+                        <td><a href="/apartments/{{ $apartment->apartment }}/edit"
+                                class="btn btn-sm btn-primary rounded-0">Edit</a></td>
                     </tr>
                 @endforeach
             </table>

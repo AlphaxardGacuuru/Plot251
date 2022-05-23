@@ -20,7 +20,13 @@
 								 'F7' => 'F7',
 								 'F8' => 'F8',
 								 'F9' => 'F9'
-								 ], null, ['class' => 'rounded-0 form-control', 'placeholder' => 'Select apartment', 'required']) }}
+								 ], 
+								 null, 
+								 [
+									 'class' => 'rounded-0 form-control', 
+									 'placeholder' => 'Select apartment', 
+									 'required'
+									 ]) }}
             <br>
             {{ Form::number('amount', '', ['class' => 'rounded-0 form-control', 'placeholder' => 'Amount paid', 'required']) }}
             <br>

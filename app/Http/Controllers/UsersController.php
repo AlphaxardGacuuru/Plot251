@@ -69,7 +69,12 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        return view('pages/user-edit');
+        $apartment = User::where('apartment', $id)->first();
+
+        return view('pages/user-edit')->with([
+            'id' => $id,
+            'apartment' => $apartment,
+        ]);
     }
 
     /**
