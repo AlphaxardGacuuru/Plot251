@@ -11,7 +11,7 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <a href="/water-readings/{{ $monthNum + 1 }}"
-                            class="btn btn-success rounded-0 float-left">
+                            class="btn btn-primary rounded-0 float-left">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-chevron-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
@@ -21,7 +21,7 @@
                         </a>
                     </div>
                     <div>
-                        <a href="/water-readings/{{ $monthNum - 1 }}" class="btn btn-success rounded-0 float-right">
+                        <a href="/water-readings/{{ $monthNum - 1 }}" class="btn btn-primary rounded-0 float-right">
                             <span>next</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-chevron-right" viewBox="0 0 16 16">

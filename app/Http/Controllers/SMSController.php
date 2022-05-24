@@ -93,7 +93,7 @@ class SMSController extends Controller
             $bill = $request->input('bill');
             $phone = $request->input('phone');
             $betterPhone = substr_replace($phone, '+254', 0, -9);
-            $message = "Dear $F,\nYour Current Bill: KES $bill is still due.\nPay via Mpesa to Alphaxard Njoroge 0700364446.\nThank you.";
+            $message = "Dear $F,\nYour Current Bill: KES $bill is still due.\nPay via Mpesa to Alphaxard Njoroge 0700364446 to avoid disconnection.\nThank you.";
 
             // Set your app credentials
             // $username = "sandbox";
@@ -137,7 +137,7 @@ class SMSController extends Controller
                                                 $sms = new SMS;
                                                 $sms->message_id = $value3->messageId;
                                                 $sms->number = $value3->number;
-                                                // $sms->text = $message;
+                                                $sms->text = $message;
                                                 $sms->status = $value3->status;
                                                 $sms->status_code = $value3->statusCode;
                                                 $sms->cost = $value3->cost;

@@ -93,9 +93,9 @@ class UsersController extends Controller
         $id = User::where("apartment", $apartment)->first()->id;
 
         $apartment = User::find($id);
-        $request->filled("name") && $apartment->name = $request->input("name");
-        $request->filled("email") && $apartment->email = $request->input("email");
-        $request->filled("phone") && $apartment->phone = $request->input("phone");
+        $apartment->name = $request->input("name");
+        $apartment->email = $request->input("email");
+        $apartment->phone = $request->input("phone");
         $apartment->save();
 
         return redirect("apartments/" . $apartment->apartment . "/edit")
