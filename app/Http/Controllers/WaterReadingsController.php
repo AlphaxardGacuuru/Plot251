@@ -164,16 +164,17 @@ class WaterReadingsController extends Controller
      */
     public function show($monthNum)
     {
-        if ($monthNum >= 0) {
-            /* Months to query */
-            $month = Carbon::now()->subMonth($monthNum + 1)->format("F");
-            $lastMonth = Carbon::now()->subMonth($monthNum)->format("Y-m");
-            $lastMonth2 = Carbon::now()->subMonth($monthNum + 1)->format("Y-m");
-            $lastMonth3 = Carbon::now()->subMonth($monthNum + 2)->format("Y-m");
+        /* Months to query */
+        $month = Carbon::now()->subMonth($monthNum + 1)->format("F");
+        $lastMonth = Carbon::now()->subMonth($monthNum)->format("Y-m");
+        $lastMonth2 = Carbon::now()->subMonth($monthNum + 1)->format("Y-m");
+        $lastMonth3 = Carbon::now()->subMonth($monthNum + 2)->format("Y-m");
 
-            $users = User::skip(1)->take(9)->get();
-			
-            $apartments = [];
+        $users = User::skip(1)->take(9)->get();
+
+        $apartments = [];
+
+        if ($monthNum >= 0) {
 
             // Generate apartments list
             foreach ($users as $key => $user) {
@@ -190,7 +191,7 @@ class WaterReadingsController extends Controller
 
                     return view('pages/index')->with([
                         'apartments' => [],
-                        'month' => '',
+                        'month' => $month,
                         'monthNum' => $monthNum,
                         'lastReadingTot' => '',
                         'lastReadingTot2' => '',
@@ -278,7 +279,7 @@ class WaterReadingsController extends Controller
 
         return view('pages/index')->with([
             'apartments' => [],
-            'month' => '',
+            'month' => $month,
             'monthNum' => $monthNum,
             'lastReadingTot' => '',
             'lastReadingTot2' => '',

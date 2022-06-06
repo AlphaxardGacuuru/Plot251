@@ -153,7 +153,7 @@ class SMSController extends Controller
                     echo "Error: " . $e->getMessage();
                 }
             }
-            return redirect('water-readings')->with(['success' => 'Saved']);
+            return redirect('water-readings')->with('success', 'Saved');
         } else {
             $sms = SMS::where('message_id', $request->id)->first();
             $sms->delivery_status = $request->input('status');
