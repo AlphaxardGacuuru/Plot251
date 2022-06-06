@@ -236,6 +236,7 @@ class WaterReadingsController extends Controller
                     'litres' => $units * 1000,
                     'bill' => $units * 100,
                     'paid' => $amount,
+                    'balance' =>$units * 100 - (int)$amount,
                 ]);
             }
 

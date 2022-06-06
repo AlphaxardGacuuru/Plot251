@@ -11,22 +11,31 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <a href="/water-readings/{{ $monthNum + 1 }}"
-                            class="btn btn-primary rounded-0 float-left">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-chevron-left" viewBox="0 0 16 16">
+                           class="btn btn-primary rounded-0 float-left">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-chevron-left"
+                                 viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
-                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
                             </svg>
                             <span>prev</span>
                         </a>
                     </div>
                     <div>
-                        <a href="/water-readings/{{ $monthNum - 1 }}" class="btn btn-primary rounded-0 float-right">
+                        <a href="/water-readings/{{ $monthNum - 1 }}"
+                           class="btn btn-primary rounded-0 float-right">
                             <span>next</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-chevron-right"
+                                 viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
-                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                             </svg>
                         </a>
                         </d>
@@ -58,27 +67,32 @@
                                         <td class="text-primary">{{ $apartment['litres'] }}</td>
                                         <td class="text-success">KES {{ $apartment['bill'] }}
                                         </td>
-                                        @if($apartment['paid'])
+                                        @if(!$apartment['balance'])
                                             <td class="text-success">
                                                 KES {{ $apartment['paid'] }}
                                             </td>
                                             <td class="text-success"></td>
                                         @else
-                                            <td class="text-danger">KES 0</td>
+                                            <td class="text-danger">
+                                                KES {{ $apartment['paid'] }}
+                                            </td>
                                             <td>
-                                                @if(Auth::user()->name ==
-                                                    "Admin")
-                                                    {!!Form::open(["action" => "SMSController@store", "method" =>
-                                                    "POST"])!!}
+                                                @if(Auth::user()
+                                                    ->name == "Admin")
+                                                    {!!Form::open([
+                                                    "action" => "SMSController@store",
+                                                    "method" => "POST"
+                                                    ])!!}
                                                     {{ Form::hidden('apartment', $apartment['apartment']) }}
                                                     {{ Form::hidden('phone', $apartment['userPhone']) }}
-                                                    {{ Form::hidden('bill', $apartment['bill']) }}
+                                                    {{ Form::hidden('balance', $apartment['balance']) }}
                                                     {{ Form::submit('Send', ['class' => 'btn btn-sm btn-success rounded-0']) }}
                                                     {!!Form::close()!!}
                                                 @else
-                                                    {!!Form::open(["action" => "WaterPaymentsController@store", "method"
-                                                    =>
-                                                    "POST"])!!}
+                                                    {!!Form::open([
+                                                    "action" => "WaterPaymentsController@store",
+                                                    "method" => "POST"
+                                                    ])!!}
                                                     {{ Form::hidden('apartment', $apartment['apartment']) }}
                                                     {{ Form::hidden('phone', $apartment['userPhone']) }}
                                                     {{ Form::hidden('bill', $apartment['bill']) }}
@@ -109,7 +123,8 @@
                     @if($lastReadingTot3 > 0)
                         {{-- Progress Bar --}}
                         <div class="progress rounded-0">
-                            <div class="progress-bar bg-{{ $class }}" style="width:10%">{{ $proportion }} %</div>
+                            <div class="progress-bar bg-{{ $class }}"
+                                 style="width:10%">{{ $proportion }} %</div>
                         </div>
                         <br>
                         <h5 class="text-{{ $class }}">{{ $moreOrLess }}</h5>

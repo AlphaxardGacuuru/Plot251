@@ -81,19 +81,19 @@ class SMSController extends Controller
         if ($request->filled('apartment')) {
 
             Http::withHeaders([
-                // 'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
-                'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
-                // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-            ])->post('https://api.africastalking.com/auth-token/generate', [
-                // 'username' => 'sandbox',
-                'username' => 'plot251',
+                'apiKey' => 'be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b',
+                // 'apiKey' => '8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f',
+                ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
+            // ])->post('https://api.africastalking.com/auth-token/generate', [
+                'username' => 'sandbox',
+                // 'username' => 'plot251',
             ]);
 
             $F = $request->input('apartment');
-            $bill = $request->input('bill');
+            $balance = $request->input('balance');
             $phone = $request->input('phone');
             $betterPhone = substr_replace($phone, '+254', 0, -9);
-            $message = "Dear $F,\nYour Current Bill: KES $bill is still due.\nPay via Mpesa to Alphaxard Njoroge 0700364446 to avoid disconnection.\nThank you.";
+            $message = "Dear $F,\nYour Current Balance: KES $balance is still due.\nPay via Mpesa to Alphaxard Njoroge 0700364446 to avoid disconnection.\nThank you.";
 
             // Set your app credentials
             // $username = "sandbox";
