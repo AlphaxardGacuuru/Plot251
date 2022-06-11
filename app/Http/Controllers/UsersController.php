@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -24,7 +25,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::skip(1)->take(9)->get();
+        $users = User::all();
 
         return view('pages/user')->with(['users' => $users]);
     }
@@ -96,6 +97,7 @@ class UsersController extends Controller
         $apartment->name = $request->input("name");
         $apartment->email = $request->input("email");
         $apartment->phone = $request->input("phone");
+        $apartment->password = Hash::make($request->input("password"));
         $apartment->save();
 
         return redirect("apartments/" . $apartment->apartment . "/edit")

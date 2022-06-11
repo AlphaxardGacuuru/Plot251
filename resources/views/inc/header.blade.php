@@ -67,7 +67,7 @@
                                            class="p-3 dropdown-item"
                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            <h6>{{ __('Sign out') }}</h6>
+                                            <h6>{{ __('Log out') }}</h6>
                                         </a>
                                         <form id="logout-form"
                                               action="{{ route('logout') }}"

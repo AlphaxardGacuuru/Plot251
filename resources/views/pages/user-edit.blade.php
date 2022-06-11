@@ -15,6 +15,8 @@
             <br />
             {{ Form::number('phone', $apartment->phone, ["placeholder" => "Phone", "class" => "form-control rounded-0"]) }}
             <br />
+            {{ Form::text('password', "", ["placeholder" => "Password", "class" => "form-control rounded-0"]) }}
+            <br />
             {{ Form::submit("Edit", ["class" => "btn btn-primary rounded-0"]) }}
             {{ Form::close() }}
         </center>
