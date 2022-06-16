@@ -11,22 +11,31 @@
                 <div class="d-flex justify-content-between">
                     <div>
                         <a href="/water-readings/{{ $monthNum + 1 }}"
-                            class="btn btn-primary rounded-0 float-left">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-chevron-left" viewBox="0 0 16 16">
+                           class="btn btn-primary rounded-0 float-left">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-chevron-left"
+                                 viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
-                                    d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                      d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
                             </svg>
                             <span>prev</span>
                         </a>
                     </div>
                     <div>
-                        <a href="/water-readings/{{ $monthNum - 1 }}" class="btn btn-primary rounded-0 float-right">
+                        <a href="/water-readings/{{ $monthNum - 1 }}"
+                           class="btn btn-primary rounded-0 float-right">
                             <span>next</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 class="bi bi-chevron-right"
+                                 viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
-                                    d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                      d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                             </svg>
                         </a>
                         </d>
@@ -58,15 +67,20 @@
                                         <td class="text-primary">{{ $apartment['litres'] }}</td>
                                         <td class="text-success">KES {{ $apartment['bill'] }}
                                         </td>
+                                        {{-- Check if there's a balance --}}
                                         @if(!$apartment['balance'])
+                                            {{-- Paid --}}
                                             <td class="text-success">
                                                 KES {{ $apartment['paid'] }}
                                             </td>
+                                            {{-- SMS --}}
                                             <td class="text-success"></td>
                                         @else
+                                            {{-- Paid --}}
                                             <td class="text-danger">
-                                                KES {{ $apartment['paid'] }}
+                                                KES {{ $apartment['balance'] }}
                                             </td>
+                                            {{-- SMS --}}
                                             <td>
                                                 @if(Auth::user()
                                                     ->name == "Admin")
@@ -114,7 +128,8 @@
                     @if($lastReadingTot3 > 0)
                         {{-- Progress Bar --}}
                         <div class="progress rounded-0">
-                            <div class="progress-bar bg-{{ $class }}" style="width:10%">{{ $proportion }} %</div>
+                            <div class="progress-bar bg-{{ $class }}"
+                                 style="width:10%">{{ $proportion }} %</div>
                         </div>
                         <br>
                         <h5 class="text-{{ $class }}">{{ $moreOrLess }}</h5>
