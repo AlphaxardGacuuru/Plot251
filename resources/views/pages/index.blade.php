@@ -78,7 +78,7 @@
                                         @else
                                             {{-- Paid --}}
                                             <td class="text-danger">
-                                                KES {{ $apartment['balance'] }}
+                                                KES 0
                                             </td>
                                             {{-- SMS --}}
                                             <td>
