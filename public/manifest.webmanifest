@@ -4,7 +4,7 @@
 	"start_url": ".",
 	"display": "standalone",
 	"theme_color": "#232323",
-	"background_color": "#fff",
+	"background_color": "#007bff",
 	"orientation": "portrait-primary",
 	"description": "Water Management App",
 	"icons": [{
