@@ -15,7 +15,7 @@
     <title>{{ config('app.name', 'Plot251') }}</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="/storage/img/favicon-32x32.png">
+    <link rel="icon" href="/favicon-32x32.png">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
