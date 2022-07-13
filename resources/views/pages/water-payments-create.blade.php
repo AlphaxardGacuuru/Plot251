@@ -11,15 +11,15 @@
             {!!Form::open(["action" => "WaterPaymentsController@store", "method" => "POST"])!!}
             <br>
             {{ Form::select('apartment', [
-								 'F1'=> 'F1',
-								 'F2' => 'F2',
-								 'F3' => 'F3',
-								 'F4' => 'F4',
-								 'F5' => 'F5',
-								 'F6' => 'F6',
-								 'F7' => 'F7',
-								 'F8' => 'F8',
-								 'F9' => 'F9'
+								 'F1'=> 'Gacuuru wa Karenge',
+								 'F2' => 'Gacuuru wa Karenge',
+								 'F3' => 'Naomi',
+								 'F4' => 'Shadrack',
+								 'F5' => 'Katumbu',
+								 'F6' => 'Salome',
+								 'F7' => 'Angela Nzuki',
+								 'F8' => 'Angienade',
+								 'F9' => 'Phiona'
 								 ], 
 								 null, 
 								 [
