@@ -122,19 +122,19 @@
             @if(Auth::user()->name ==
                 "Admin")
                 <a href='/apartments'
-                   class="pb-2">
+                   class="p-2">
                     <h6><span class="ml-3 mr-4">Accounts</span></h6>
                 </a>
                 <a href='/water-readings/create'
-                   class="pb-2">
+                   class="p-2">
                     <h6><span class="ml-3 mr-4">Readings</span></h6>
                 </a>
                 <a href="/water-payments/create"
-                   class="pb-2">
+                   class="p-2">
                     <h6><span class="ml-3 mr-4">Payments</span></h6>
                 </a>
                 <a href="/sms"
-                   class="pb-2">
+                   class="p-2">
                     <h6><span class="ml-3 mr-4">SMS</span></h6>
                 </a>
             @endif
