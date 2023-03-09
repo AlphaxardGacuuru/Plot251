@@ -8,9 +8,9 @@
                     <div class="logo-area">
                         @auth
                             <a href="/"
-                               style="font-size: 2rem;">Plot 251</a>
+                               style="font-size: 2rem;">Black Property</a>
                         @else
-                            <a href="#">Plot 251</a>
+                            <a href="#">Black Property</a>
                         @endauth
                     </div>
 

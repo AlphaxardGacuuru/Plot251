@@ -4,7 +4,7 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <center>
-            <h1 style="color: #209CEE;">Plot 251 Management</h1>
+            <h1 style="color: #209CEE;">Black Property Management</h1>
             @auth
                 <h2 class="text-primary">Water Bill</h2>
                 <h4 class="text-primary">{{ $month }}</h4>

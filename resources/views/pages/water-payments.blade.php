@@ -5,7 +5,7 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <center>
-            <h1>Plot 251 Management</h1>
+            <h1>Black Property Management</h1>
             @auth
                 <h2>Water payments</h2>
                 <h3>
