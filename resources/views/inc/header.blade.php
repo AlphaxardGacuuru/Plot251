@@ -83,9 +83,10 @@
                                 </div>
                             </div>
                             {{-- For small screens --}}
-                            <div class="text-light anti-hidden"
+                            <div class="text-dark anti-hidden"
                                  onclick="document.getElementById('bottom-menu').classList.add('menu-open')">
                                 <a href="#"
+                                   class="text-dark"
                                    onclick="event.preventDefault()">
                                     {{ Auth::user()->name }}
                                 </a>
