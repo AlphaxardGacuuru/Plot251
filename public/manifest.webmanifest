@@ -1,12 +1,12 @@
 {
-	"name": "Plot251",
-	"short_name": "Plot251",
+	"name": "Black Property",
+	"short_name": "Black Property",
 	"start_url": ".",
 	"display": "standalone",
 	"theme_color": "#232323",
 	"background_color": "#007bff",
 	"orientation": "portrait-primary",
-	"description": "Water Management App",
+	"description": "Property Management App",
 	"icons": [{
             "src": "/android-chrome-512x512.png",
             "sizes": "512x512",

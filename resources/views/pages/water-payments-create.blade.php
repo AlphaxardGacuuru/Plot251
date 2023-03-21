@@ -30,7 +30,7 @@
             <br>
             {{ Form::number('amount', '', ['class' => 'rounded-0 form-control', 'placeholder' => 'Amount paid', 'required']) }}
             <br>
-            {{ Form::submit('Save', ['class' => 'rounded-0 btn btn-primary']) }}
+            {{ Form::submit('Save', ['class' => 'sonar-btn']) }}
             {!!Form::close()!!}
             </form>
         </center>

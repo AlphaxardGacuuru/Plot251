@@ -12,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Property') }}</title>
+    <title>{{ config('app.name', 'Black Property') }}</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="/favicon-32x32.png">

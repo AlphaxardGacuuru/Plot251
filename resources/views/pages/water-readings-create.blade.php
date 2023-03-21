@@ -27,7 +27,7 @@
             <br>
             {{ Form::number('F9', '', ['class' => 'rounded-0 form-control', 'placeholder' => 'Flat 9', 'required']) }}
             <br>
-            {{ Form::submit('Save', ['class' => 'rounded-0 btn btn-primary']) }}
+            {{ Form::submit('Save', ['class' => 'sonar-btn']) }}
             {!!Form::close()!!}
         </center>
     </div>

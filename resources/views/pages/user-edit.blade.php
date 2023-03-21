@@ -17,7 +17,7 @@
             <br />
             {{ Form::text('password', "", ["placeholder" => "Password", "class" => "form-control rounded-0"]) }}
             <br />
-            {{ Form::submit("Edit", ["class" => "btn btn-primary rounded-0"]) }}
+            {{ Form::submit("Edit", ["class" => "sonar-btn"]) }}
             {{ Form::close() }}
         </center>
     </div>

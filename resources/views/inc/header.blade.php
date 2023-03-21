@@ -1,5 +1,6 @@
 <!-- ***** Header Area Start ***** -->
-<header class="header-area bg-primary">
+<header class="header-area"
+        style="background-color: #fff">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -8,9 +9,12 @@
                     <div class="logo-area">
                         @auth
                             <a href="/"
+                               class="text-dark"
                                style="font-size: 2rem;">Black Property</a>
                         @else
-                            <a href="#">Black Property</a>
+                            <a href="#"
+                               class="text-dark"
+                               style="font-size: 2rem;">Black Property</a>
                         @endauth
                     </div>
 
@@ -34,7 +38,7 @@
                         @else
                             <div class="dropdown hidden">
                                 <a href="#"
-                                   class="nav-link dropdown-toggle"
+                                   class="nav-link dropdown-toggle text-dark"
                                    role="button"
                                    id="dropdownMenuLink"
                                    data-toggle="dropdown"

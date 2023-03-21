@@ -4,14 +4,14 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <center>
-            <h1 style="color: #209CEE;">Black Property Management</h1>
+            <h1>Black Property Management</h1>
             @auth
-                <h2 class="text-primary">Water Bill</h2>
-                <h4 class="text-primary">{{ $month }}</h4>
+                <h2>Water Bill</h2>
+                <h4>{{ $month }}</h4>
                 <div class="d-flex justify-content-between">
                     <div>
                         <a href="/water-readings/{{ $monthNum + 1 }}"
-                           class="btn btn-primary rounded-0 float-left">
+                           class="btn mysonar-btn float-left">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  width="16"
                                  height="16"
@@ -26,7 +26,7 @@
                     </div>
                     <div>
                         <a href="/water-readings/{{ $monthNum - 1 }}"
-                           class="btn btn-primary rounded-0 float-right">
+                           class="btn mysonar-btn float-right">
                             <span>next</span>
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  width="16"
@@ -53,7 +53,7 @@
                                 <th class="text-primary">Litres</th>
                                 <th class="text-success">Bill</th>
                                 <th class="text-success">Paid</th>
-                                <th class="text-success">SMS</th>
+                                <th>SMS</th>
                             </tr>
                             @foreach($apartments as $apartment)
                                 @if($apartment['apartment']
@@ -91,7 +91,7 @@
                                                     {{ Form::hidden('apartment', $apartment['apartment']) }}
                                                     {{ Form::hidden('phone', $apartment['userPhone']) }}
                                                     {{ Form::hidden('balance', $apartment['balance']) }}
-                                                    {{ Form::submit('Send', ['class' => 'btn btn-sm btn-success rounded-0']) }}
+                                                    {{ Form::submit('Send', ['class' => 'mysonar-btn']) }}
                                                     {!!Form::close()!!}
                                                 @else
                                                     {!!Form::open([
