@@ -55,16 +55,20 @@ class WaterReadingsController extends Controller
     {
         $this->validate($request, [
             'F1' => 'required',
+            'F2' => 'required',
+            'F3' => 'required',
+            'F4' => 'required',
+            'F5' => 'required',
+            'F6' => 'required',
+            'F7' => 'required',
+            'F8' => 'required',
+            'F9' => 'required',
         ]);
 
-        Http::withHeaders([
-            // 'apiKey' => env('AFRICASTKNG_API_KEY_SANDBOX'),
-            'apiKey' => env('AFRICASTKNG_API_KEY'),
-            // ])->post('https://api.sandbox.africastalking.com/auth-token/generate', [
-        ])->post('https://api.africastalking.com/auth-token/generate', [
-            // 'username' => env('AFRICASTKNG_USERNAME_SANDBOX'),
-            'username' => env('AFRICASTKNG_USERNAME'),
-        ]);
+        Http::withHeaders(['apiKey' => env('AFRICASTKNG_API_KEY')])
+            ->post(env('AFRICASTKNG_API_URL'),
+                ['username' => env('AFRICASTKNG_USERNAME')]
+            );
 
         for ($i = 1; $i < 10; $i++) {
             $F = "F" . $i;
@@ -88,10 +92,8 @@ class WaterReadingsController extends Controller
             $message = "Dear Flat $i,\nYour bill as at $betterDate:\nPrev Read: $lastReading->reading\nCurr Read: $newReading\nConsumption: $consumption\nCurrent Bill: KES $bill\nPay via Mpesa to Alphaxard Njoroge 0700364446. Thank you.";
 
             // Set your app credentials
-            // $username = "sandbox";
-            $username = "plot251";
-            // $apiKey = "be25ed4a43e7a6bddc176e0b38772afb52790ca0c29287b539cf390d3e08a73b";
-            $apiKey = "8c34325475a7d7d5644b04fb2aa1b1a0ddf123458b9980f36f594af699abd06f";
+            $username = env('AFRICASTKNG_USERNAME');
+            $apiKey = env('AFRICASTKNG_API_KEY');
 
             // Initialize the SDK
             $AT = new AfricasTalking($username, $apiKey);
