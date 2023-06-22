@@ -4,7 +4,6 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
         <center>
-            <h1>Black Property Management</h1>
             @auth
                 <h2>Water Bill</h2>
                 <h4>{{ $month }}</h4>
